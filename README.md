@@ -1,1 +1,1 @@
-# schc-rule-generation-using-naive-bayes
+# SCHC Rule Generation With Naive Bayes
