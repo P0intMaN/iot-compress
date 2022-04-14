@@ -7,7 +7,7 @@ Naive Bayes is branched off of the famous Bayes Theorem. It assumes independence
 ![Naive Base Fromula](https://i.imgur.com/3cl5oDz.png)
 
 ### *Why Naive Bayes for SCHC Rule Generation?*
-Over any IOT network, it is highly expected that packet traces repeat. Therefore, rule generation over here is a highly probabilistic task since any recurrent task has certain probabilities associated with it. Also, it is no good to draw a correlation between each attributes since each rule attributes are independent of each other. For this reason, Bayes is outed for Naive Bayes. 
+Over any IOT network, it is highly expected that **packet traces repeat**. Therefore, rule generation over here is a **highly probabilistic task** since any recurrent task has certain probabilities associated with it. Also, it is not good to draw a correlation between each attributes since each rule attributes are independent of each other. For this reason, Bayes is outed for Naive Bayes. 
 
 Naive Bayes specializes in probabilistic prediction and is widely used for such tasks. It is known to predict recurrent patterns with a high probabilstic accuracy. Although Naive Bayes is used for classification purposes, but the underlying principle can be modified to suit any patterns which favours probability. Rule generation is one such task.
 
