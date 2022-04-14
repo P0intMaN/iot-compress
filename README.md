@@ -13,14 +13,14 @@ Naive Bayes specializes in probabilistic prediction and is widely used for such 
 
 ## The Methodology
 The Rule Generation is briefly dissected into 5 parts:
-- JSON Walk
-- Segregation
-- Generate Bayesian Frequency Table
-- Compute Naive Bayes for Each Rule Attribute
-- Generate the Rule
+- **_JSON Walk_**
+- **_Segregation_**
+- **_Generate Bayesian Frequency Table_**
+- **_Compute Naive Bayes for Each Rule Attribute_**
+- **_Generate the Rule_**
 
 ### *JSON Walk*
-Here, we walk the JSON file and pick up the desired attributes from the entire Static Header Context. Then call a segregate_attribute API for each field and its respective attribute.
+Here, we walk the JSON file and pick up the desired attributes from the entire Static Header Context. Then call a `segregate_attribute` API for each field and its respective attribute.
 
 ```python
 # Walk the json file and collect the fieldname and the corresponding attributes
