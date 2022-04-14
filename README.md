@@ -20,7 +20,7 @@ The Rule Generation is briefly dissected into 6 parts:
 - Generate the Rule
 
 ### *JSON Walk*
-Here, we walk the JSON file and pick up the desired attributes from the entire Static Header Context.
+Here, we walk the JSON file and pick up the desired attributes from the entire Static Header Context. Then call a segregate_attribute API for each field and its respective attribute.
 
 ```python
 # Walk the json file and collect the fieldname and the corresponding attributes
@@ -34,3 +34,38 @@ for rule in data["rules"]:
                     if attribute != "fieldName":
                         segregate_attributes(field, attribute, value)
 ```
+
+### *Segregation*
+Each attribute is segregated on the basis of the fields. Example: **`IP4_ADDRESS`** attributes are: *`fieldLength, cdactionFunction .. fieldPosition`*
+
+```python
+# then calls for a corresponding baeysian frequency table
+def segregate_attributes(field, attribute, value):
+    row = assign_index_based_on_field(field)
+
+    if attribute == "targetValue":
+        value = value[0]
+        targetValue[row].append(value)
+        generate_bayesian_frequency_table(field, row, value, b_f_targetValue)
+
+    elif attribute == "cdactionFunction":
+    # .
+    # .
+    # .
+```
+Then for each attribute, it triggers the `generate_bayesian_frequencey_table`.
+
+### *Generate Bayesian Frequency Table*
+The `generate_bayesian_frequencey_table` computes the frequency table by keeping a track of all the occurence of the attribute values. These tables will be highly useful while computing Naive Bayes Probability.
+
+```python
+# generating bayesian frequency table
+def generate_bayesian_frequency_table(field, row, value, b_f_table):
+    if len(b_f_table[row]) == 0 or value not in b_f_table[row].keys():
+        b_f_table[row][value] = 1
+    else:
+        increment_freq = b_f_table[row][value] + 1
+        b_f_table[row].update({value: increment_freq})
+```
+
+### *
