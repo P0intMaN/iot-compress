@@ -36,7 +36,7 @@ for rule in data["rules"]:
 ```
 
 ### *Segregation*
-Each attribute is segregated on the basis of the fields. Example: **`IP4_ADDRESS`** attributes are: *`fieldLength, cdactionFunction .. fieldPosition`*
+Each attribute is segregated on the basis of the fields. Example: **`IP4_ADDRESS`** attributes are: *`targetValue, cdactionFunction .. fieldPosition`*
 
 ```python
 # then calls for a corresponding baeysian frequency table
