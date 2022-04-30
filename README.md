@@ -123,3 +123,39 @@ def sort_b_f_table_by_probability(b_f_table):
         b_f_table[i] = new_dict
 ```
 The scope here is that we can generate multiple rules based on decreasing probability. This can lead to much diverse rule generation. As it is evident that, all the `COMBINATION_MATRIX` is doing right now, is generating the best probable rule from the rules it learnt.
+
+### Parse the Rule
+All this program does is, spit out some of the best suited values for the rule. Now, how can we make some sense out of these values? Well, we would have to parse this rule. 
+
+Rule parsing is a fairly convoluted process of **identifying the correct and corresponding attribute and inserting the raw values**. The following function achieves the same. The function **`parse_predicted_rule`** makes use of a helper function **`parse_matching_operator`** to fill in the values of **`MatchingOperator`**. This is because **`MatchingOperator`** has its value as a **dictionary**, while our values are **discrete**. Go through the below code to understand about it in a bit more detail:
+
+```python
+# Parse the obtained Naive Bayes values into rules
+def parse_predicted_rule(best_rule):
+    RULE = []
+
+    for i in range(len(fieldName)):
+        dict = {"fieldName": fieldName[i]}
+        RULE.append(dict)
+    
+    for row in range(len(best_rule)):
+        for i in range(len(fieldName)):
+            dict = {"fieldName": fieldName[i]}
+            if row == 0:
+                RULE[i]['targetValue'] = [best_rule[row][i]]
+            elif row == 1:
+                RULE[i]['cdactionFunction'] = best_rule[row][i]
+            elif row == 2:
+                RULE[i]['matchingOperator'] = parse_matching_operator(best_rule, row, i)
+            elif row == 3:
+                RULE[i]['fieldLength'] = best_rule[row][i]
+            elif row == 4:
+                RULE[i]['direction'] = best_rule[row][i]
+            elif row == 5:
+                RULE[i]['fieldPosition'] = best_rule[row][i]
+
+            else:
+                raise IndexError('Definitely, some problem with the parse logic')
+
+    return RULE
+```
