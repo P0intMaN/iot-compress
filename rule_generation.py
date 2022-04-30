@@ -117,8 +117,41 @@ def generate_rule_by_naive_bayesian_combinations(B_F_TABLES):
                 COMBINATION_MATRIX[i].append(key)
                 break
     
-    # print the rules
-    print(COMBINATION_MATRIX)
+    return COMBINATION_MATRIX
+
+# Parse the obtained Naive Bayes values into rules
+def parse_predicted_rule(best_rule):
+    RULE = []
+
+    for i in range(len(fieldName)):
+        dict = {"fieldName": fieldName[i]}
+        RULE.append(dict)
+    
+    for row in range(len(best_rule)):
+        for i in range(len(fieldName)):
+            dict = {"fieldName": fieldName[i]}
+            if row == 0:
+                RULE[i]['targetValue'] = [best_rule[row][i]]
+            elif row == 1:
+                RULE[i]['cdactionFunction'] = best_rule[row][i]
+            elif row == 2:
+                RULE[i]['matchingOperator'] = parse_matching_operator(best_rule, row, i)
+            elif row == 3:
+                RULE[i]['fieldLength'] = best_rule[row][i]
+            elif row == 4:
+                RULE[i]['direction'] = best_rule[row][i]
+            elif row == 5:
+                RULE[i]['fieldPosition'] = best_rule[row][i]
+
+            else:
+                raise IndexError('Definitely, some problem with the parse logic')
+
+    return RULE
+
+
+def parse_matching_operator(best_rule, row, i):
+    return {"type": best_rule[row][i]}
+
 
 fieldName = [
     "IP4_VERSION",
@@ -175,7 +208,7 @@ B_F_TABLES = [
 ################# ENTRY-POINT OF THE PROGRAM ###################
 
 # opening the json file in read mode. 
-with open('ENTER_THE_PATH_TO_JSON_HERE', 'r') as f:
+with open('SCHC\\config_rules-SCHCnoSec-v06-comments.json', 'r') as f:
     data = json.load(f)
 
 # Walk the json file and collect the fieldname and the corresponding attributes
@@ -201,8 +234,14 @@ for b_f_table in B_F_TABLES:
 
 
 # Producing the most apt combinations:
-generate_rule_by_naive_bayesian_combinations(B_F_TABLES)
+best_rule = generate_rule_by_naive_bayesian_combinations(B_F_TABLES)
 
+# Parse the rule 
+parsed_rule = parse_predicted_rule(best_rule)
+
+# JSONIFY the rule and write it out to a file
+json_pretty_rule = json.dumps(parsed_rule, indent=3)
+print(json_pretty_rule)
 
 ##################### END OF PROGRAM (DEBUGGING STUFFS) #####################
 
@@ -224,4 +263,3 @@ generate_rule_by_naive_bayesian_combinations(B_F_TABLES)
 # print(b_f_cdactionFunction)
 
 # pretty_print_array_dict(b_f_targetValue)
-
